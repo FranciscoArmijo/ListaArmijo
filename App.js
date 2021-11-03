@@ -8,16 +8,15 @@ import {
 import React, { useState } from 'react';
 
 import AgregarItem from './components/AgregarItem'
+import ComponenteLista from './components/List/componenteLista.js'
 import Modal from './components/Modal.js'
 import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
   const [inputText, setInputText] = useState('');
   const [itemList, setItemList] = useState([]);
-
   const [itemSelected, setItemSelected] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
-
   const handleChangeText = (text) => setInputText(text);
   const handleAddItem = () => {
     setItemList([
@@ -44,7 +43,11 @@ export default function App() {
 
   return (
     <View style={styles.screen}>
-      <AgregarItem handleChangeText ={handleChangeText} inputText= {inputText} handleAddItem={handleAddItem}/>
+      <AgregarItem handleChangeText={handleChangeText} inputText={inputText} handleAddItem={handleAddItem} />
+
+      <ComponenteLista itemList={itemList} handleModal={handleModal} />
+
+      {/*
       <FlatList
         data={itemList}
         renderItem={data => {
@@ -61,7 +64,8 @@ export default function App() {
         }}
         keyExtractor={item => item.id}
       />
-      <Modal modalVisible= {modalVisible} handleConfirmDelete = {handleConfirmDelete} itemSelected={itemSelected} />
+      */}
+      <Modal modalVisible={modalVisible} handleConfirmDelete={handleConfirmDelete} itemSelected={itemSelected} />
       <StatusBar style="auto" />
     </View>
   );
