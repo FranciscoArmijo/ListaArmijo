@@ -6,11 +6,11 @@ import {
 import ItemLista from './itemLista';
 import React from 'react';
 
-const ComponenteLista = ({ itemList, handleModal }) => {
+const ComponenteLista = ({ itemList, handleModal, handleBlurback }) => {
   return (
     <FlatList
       data={itemList}
-      renderItem={(data) => <ItemLista handleModal={handleModal} data={data} />}
+      renderItem={(data) => <ItemLista handleModal={handleModal} data={data} handleBlurback ={handleBlurback}/>}
       keyExtractor={item => item.id}
     />
   );

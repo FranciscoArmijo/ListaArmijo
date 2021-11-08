@@ -1,9 +1,7 @@
 import {
-  Button,
-  FlatList,
+  ImageBackground,
   StyleSheet,
-  Text,
-  View,
+  View
 } from 'react-native';
 import React, { useState } from 'react';
 
@@ -17,6 +15,8 @@ export default function App() {
   const [itemList, setItemList] = useState([]);
   const [itemSelected, setItemSelected] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
+  const [blurBack, setBlurBack] = useState(true);
+
   const handleChangeText = (text) => setInputText(text);
   const handleAddItem = () => {
     setItemList([
@@ -37,43 +37,33 @@ export default function App() {
   }
 
   const handleModal = id => {
+    handleBlurback();
     setItemSelected(itemList.find(item => item.id === id));
     setModalVisible(true);
+    
   }
+ const handleBlurback = () => {
+   setBlurBack(!blurBack)
+ }
 
   return (
     <View style={styles.screen}>
-      <AgregarItem handleChangeText={handleChangeText} inputText={inputText} handleAddItem={handleAddItem} />
+      <ImageBackground blurRadius ={blurBack?0:15} source={require('./src/images/hojasFondo.jpg')} resizeMode="cover" style={styles.image}>
+        <AgregarItem handleChangeText={handleChangeText} inputText={inputText} handleAddItem={handleAddItem} />
 
-      <ComponenteLista itemList={itemList} handleModal={handleModal} />
+        <ComponenteLista itemList={itemList} handleModal={handleModal} handleBlurback ={handleBlurback} />
 
-      {/*
-      <FlatList
-        data={itemList}
-        renderItem={data => {
-          return (
-            <View style={[styles.item, styles.shadow]}>
-              <Text>{data.item.value}</Text>
-              <Button
-                title="X"
-                color="#AAAAAA"
-                onPress={() => handleModal(data.item.id)}
-              />
-            </View>
-          );
-        }}
-        keyExtractor={item => item.id}
-      />
-      */}
-      <Modal modalVisible={modalVisible} handleConfirmDelete={handleConfirmDelete} itemSelected={itemSelected} />
-      <StatusBar style="auto" />
+
+        <Modal modalVisible={modalVisible} handleConfirmDelete={handleConfirmDelete} itemSelected={itemSelected} handleBlurback ={handleBlurback}/>
+        <StatusBar style="auto" />
+      </ImageBackground>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   screen: {
-    padding: 30,
+    padding: 0,
     backgroundColor: '#F0F0F0',
     flex: 1,
   },
@@ -131,5 +121,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-  }
+  },
+  image: {
+    padding: 40,
+    flex: 1,
+    justifyContent: "center",
+    opacity: 0.7,
+  },
 });

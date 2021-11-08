@@ -8,7 +8,11 @@ import {
 
 import React from 'react';
 
-const modalComponent = function ({ modalVisible, handleConfirmDelete,itemSelected}) {
+const modalComponent = function ({ modalVisible, handleConfirmDelete,itemSelected, handleBlurback}) {
+  const accionConfirmar = () =>{
+    handleBlurback();
+    handleConfirmDelete()
+  }
     return (
         <Modal animationType="slide" visible={modalVisible} transparent>
             <View style={styles.modalContainer}>
@@ -17,7 +21,7 @@ const modalComponent = function ({ modalVisible, handleConfirmDelete,itemSelecte
                     <Text style={styles.modalTitle}>{itemSelected.value}</Text>
                     <View>
                         <Button
-                            onPress={handleConfirmDelete}
+                            onPress={accionConfirmar}
                             title="CONFIRMAR"
                         />
                     </View>
